@@ -1,0 +1,22 @@
+<div class="chalan-container">
+    <h2>Chalan Form</h2>
+  
+    <!-- Your form template here -->
+  
+    <!-- Display chalan data in a table -->
+    <table>
+      <thead>
+        <tr>
+          <th>Challan ID</th>
+          <!-- Add more headers based on your chalan data structure -->
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let chalan of chalanData">
+          <td>{{ chalan.delivery_challan_id }}</td>
+          <!-- Display other data fields accordingly -->
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  
