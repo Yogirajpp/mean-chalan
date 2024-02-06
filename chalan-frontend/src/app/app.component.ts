@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { ChalanComponent } from './chalanComponent/chalan.component';
+import { DeliveryChalanComponent } from './chalanComponent/delivery-chalan.component';
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet , ChalanComponent],
+  imports: [RouterOutlet , DeliveryChalanComponent ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })

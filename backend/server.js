@@ -6,13 +6,16 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 
 // routes
-const chalanFormRoutes = require('./routes/chalanFormRoutes');
+const chalanRoutes = require('./routes/chalanRoutes');
 
 // express app
 const app = express();
 
 // middleware
-app.use(cors()); // Enable CORS
+app.use(cors({
+  origin: 'http://localhost:4200' // Replace with your frontend URL
+}));
+
 app.use(bodyParser.json()); // Parse JSON requests
 
 app.use((req, res, next) => {
@@ -20,8 +23,9 @@ app.use((req, res, next) => {
   next();
 });
 
-// routes
-app.use('/api/chalanForms', chalanFormRoutes);
+// Routes
+app.use('/api/delivery_chalan_details', chalanRoutes);
+
 
 // connect to db
 mongoose.connect(process.env.MONGO_URL, {})

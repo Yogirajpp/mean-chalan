@@ -1,0 +1,28 @@
+<div class="chalan-container">
+  <button (click)="submitPayload()">Submit Payload</button>
+
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Delivery Challan ID</th>
+        <th>Part ID</th>
+        <th>Serial No</th>
+        <th>Unit</th>
+        <th>Quantity</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of deliveryData">
+        <td>{{ item.id }}</td>
+        <td>{{ item.delivery_challan_id }}</td>
+        <td>{{ item.part_id }}</td>
+        <td>{{ item.serial_no }}</td>
+        <td>{{ item.uon }}</td>
+        <td>{{ item.qty }}</td>
+      </tr>
+    </tbody>
+  </table>
+  
+</div>
+  
