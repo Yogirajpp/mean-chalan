@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component , OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ChalanService } from './chalan.service';
 
@@ -11,7 +11,7 @@ import { ChalanService } from './chalan.service';
   imports: [CommonModule , FormsModule],
   providers: [ChalanService]
 })
-export class DeliveryChalanComponent {
+export class DeliveryChalanComponent implements OnInit {
   apiUrl = 'http://65.1.188.60:2121/api/delivery_chalan_details';
   deliveryData: any[] = [];
   payload = {
@@ -27,6 +27,9 @@ export class DeliveryChalanComponent {
 
   constructor(private chalanService: ChalanService) {}
 
+  ngOnInit(): void {
+    this.fetchAllChalanDetails();
+  }
   
 
   submitForm() {
@@ -58,6 +61,20 @@ export class DeliveryChalanComponent {
           console.error('Error while sending payload', error);
         }
       );
+  }
+
+  fetchAllChalanDetails() {
+    this.chalanService.getAllChalanDetails()
+    .subscribe(
+      (response) => {
+        console.log('Payload get successfully', response);
+        this.deliveryData = response; // Assign response data to deliveryData variable
+        
+      },
+      (error) => {
+        console.error('Error while getting payload', error);
+      }
+    );
   }
   
   showSuccessNotification() {

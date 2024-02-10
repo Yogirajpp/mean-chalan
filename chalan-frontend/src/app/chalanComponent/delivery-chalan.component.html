@@ -26,26 +26,30 @@
     <button (click)="submitPayload()">Submit Payload</button>
   </div>
   <div class="notification" [hidden]="!showNotification">{{ notificationMessage }}</div>
-
-  <!-- <table *ngIf="submittedData.length > 0">
-    <thead>
-      <tr>
-        <th>Delivery Challan ID</th>
-        <th>Part ID</th>
-        <th>Serial No</th>
-        <th>Quantity</th>
-        <th>Unit</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let data of submittedData">
-        <td>{{ data.delivery_challan_id }}</td>
-        <td>{{ data.part_id }}</td>
-        <td>{{ data.serial_no }}</td>
-        <td>{{ data.qty }}</td>
-        <td>{{ data.unit }}</td>
-      </tr>
-    </tbody>
-  </table> -->
   
+</div>
+<div class="allData-container">
+  <div class="delivery-list">
+    <div class="delivery-item" *ngFor="let data of deliveryData">
+      <p class="delivery-header">Delivery Challan ID: {{ data.delivery_challan_id }}</p>
+      <table class="parts-table">
+        <thead>
+          <tr>
+            <th>Part ID</th>
+            <th>Serial No</th>
+            <th>Quantity</th>
+            <th>Unit</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let part of data.parts">
+            <td>{{ part.part_id }}</td>
+            <td>{{ part.serial_no }}</td>
+            <td>{{ part.qty }}</td>
+            <td>{{ part.unit }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
 </div>

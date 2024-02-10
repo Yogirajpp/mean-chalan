@@ -57,5 +57,23 @@ export class ChalanService {
     });
   }
 
+  getAllChalanDetails(): Observable<any[]> {
+    return new Observable((observer) => {
+      fetch(`http://localhost:2121/api/forms/all`)
+        .then(response => {
+          if (!response.ok) {
+            throw new Error('Network response was not ok');
+          }
+          return response.json();
+        })
+        .then(data => {
+          observer.next(data);
+          observer.complete();
+        })
+        .catch(error => {
+          observer.error(error);
+        });
+    });
+  }
   
 }
