@@ -2,16 +2,22 @@
 
 const DeliveryChalan = require('../models/chalanModels');
 
-exports.addChalanDetails = (req, res) => {
-  const payload = req.body;
 
-  DeliveryChalan.create(payload, (err, data) => {
-    if (err) {
-      console.error('Error while saving to MongoDB', err);
-      res.status(500).send('Internal Server Error');
-    } else {
-      console.log('Data saved to MongoDB:', data);
-      res.status(200).send('Data saved successfully');
-    }
-  });
+// create new form
+const addChalanDetails = async (req, res) => {
+  console.log('Received Form Data:', req.body); // Log the received data
+  try {
+    const form = await DeliveryChalan.create(req.body);
+    console.log('Form created:', form);
+    res.status(200).json(form);
+  } catch (error) {
+    console.error('Error creating form:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
 };
+
+
+module.exports = {
+  addChalanDetails,
+  
+}

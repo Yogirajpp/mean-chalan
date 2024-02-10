@@ -1,28 +1,51 @@
 <div class="chalan-container">
-  <button (click)="submitPayload()">Submit Payload</button>
+  <div class="form-container">
+    <label for="deliveryChallanId">Delivery Challan ID:</label>
+    <input type="number" id="deliveryChallanId" [(ngModel)]="payload.delivery_challan_id">
+  
+    <div *ngFor="let part of payload.parts; let i = index">
+      <div>
+        <label for="partId{{i}}">Part ID:</label>
+        <input type="number" id="partId{{i}}" [(ngModel)]="payload.parts[i].part_id">
+      </div>
+      <div>
+        <label for="serialNo{{i}}">Serial No:</label>
+        <input type="number" id="serialNo{{i}}" [(ngModel)]="payload.parts[i].serial_no">
+      </div>
+      <div>
+        <label for="qty{{i}}">Quantity:</label>
+        <input type="number" id="qty{{i}}" [(ngModel)]="payload.parts[i].qty">
+      </div>
+      <div>
+        <label for="unit{{i}}">Unit:</label>
+        <input type="text" id="unit{{i}}" [(ngModel)]="payload.parts[i].unit">
+      </div>
+      <hr>
+    </div>
+  
+    <button (click)="submitPayload()">Submit Payload</button>
+  </div>
+  <div class="notification" [hidden]="!showNotification">{{ notificationMessage }}</div>
 
-  <table>
+  <!-- <table *ngIf="submittedData.length > 0">
     <thead>
       <tr>
-        <th>ID</th>
         <th>Delivery Challan ID</th>
         <th>Part ID</th>
         <th>Serial No</th>
-        <th>Unit</th>
         <th>Quantity</th>
+        <th>Unit</th>
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let item of deliveryData">
-        <td>{{ item.id }}</td>
-        <td>{{ item.delivery_challan_id }}</td>
-        <td>{{ item.part_id }}</td>
-        <td>{{ item.serial_no }}</td>
-        <td>{{ item.uon }}</td>
-        <td>{{ item.qty }}</td>
+      <tr *ngFor="let data of submittedData">
+        <td>{{ data.delivery_challan_id }}</td>
+        <td>{{ data.part_id }}</td>
+        <td>{{ data.serial_no }}</td>
+        <td>{{ data.qty }}</td>
+        <td>{{ data.unit }}</td>
       </tr>
     </tbody>
-  </table>
+  </table> -->
   
 </div>
-  

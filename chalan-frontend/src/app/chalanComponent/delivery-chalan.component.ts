@@ -1,72 +1,70 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { ChalanService } from './chalan.service';
 
 @Component({
   standalone: true,
   selector: 'app-delivery-chalan',
   templateUrl: './delivery-chalan.component.html',
   styleUrls: ['./delivery-chalan.component.css'],
-  imports: [CommonModule]
+  imports: [CommonModule , FormsModule],
+  providers: [ChalanService]
 })
-export class DeliveryChalanComponent implements OnInit {
+export class DeliveryChalanComponent {
   apiUrl = 'http://65.1.188.60:2121/api/delivery_chalan_details';
   deliveryData: any[] = [];
   payload = {
-    "delivery_challan_id": 7,
-    "parts":[ 
-      {"part_id": 13, "serial_no":123, "qty": 2, "unit": "meter"},
-      {"part_id": 13, "serial_no":123, "qty": 2, "unit": "meter"},
-      {"part_id": 13, "serial_no":123, "qty": 2, "unit": "meter"},
-      {"part_id": 13, "serial_no":123, "qty": 2, "unit": "meter"}
-    ]
+    delivery_challan_id: null,
+    parts: [{ part_id: null, serial_no: null, qty: null, unit: null }]
   };
 
-  constructor() {}
-
-  ngOnInit() {
-    this.fetchDeliveryData();
-  }
-
-  fetchDeliveryData() {
-    fetch(this.apiUrl)
-      .then(response => {
-        if (!response.ok) {
-          throw new Error('Failed to fetch delivery data');
-        }
-        return response.json();
-      })
-      .then(data => {
-        this.deliveryData = data.data;
-        console.log('Delivery data:', this.deliveryData);
-      })
-      .catch(error => {
-        console.error('Error while fetching delivery data:', error.message);
-      });
-  }
   
 
+  showNotification = false;
+  notificationMessage!: string;
+
+
+  constructor(private chalanService: ChalanService) {}
+
+  
+
+  submitForm() {
+    this.chalanService.createChalan(this.payload)
+      .then(response => {
+        console.log('Form submitted successfully:', response);
+        // Reset form data after successful submission
+        this.payload = {
+          delivery_challan_id: null,
+          parts: [{ part_id: null, serial_no: null, qty: null, unit: null }]
+        };
+        
+      })
+      .catch(error => {
+        console.error('Error submitting form:', error);
+      });
+  }
+
   submitPayload() {
-    fetch(this.apiUrl + '/add', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(this.payload)
-    })
-    .then(response => {
-      console.log('Payload sent successfully with fetch', response);
-      if (response.ok) {
-        return response.json();
-      } else {
-        throw new Error('Failed to send payload');
-      }
-    })
-    .then(data => {
-      console.log('Server response:', data);
-      this.fetchDeliveryData(); // Fetch updated data after payload submission
-    })
-    .catch(error => {
-      console.error('Error while sending payload with fetch', error);
-    });
+    this.chalanService.addChalanForm(this.payload)
+      .subscribe(
+        (response) => {
+          console.log('Payload sent successfully', response);
+          this.showSuccessNotification();
+          // After payload submission, call submitForm
+          this.submitForm();
+        },
+        (error) => {
+          console.error('Error while sending payload', error);
+        }
+      );
+  }
+  
+  showSuccessNotification() {
+    this.notificationMessage = 'Payload submitted successfully.';
+    this.showNotification = true;
+    setTimeout(() => {
+      this.showNotification = false;
+    }, 3000);
   }
 }

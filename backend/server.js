@@ -24,7 +24,7 @@ app.use((req, res, next) => {
 });
 
 // Routes
-app.use('/api/delivery_chalan_details', chalanRoutes);
+app.use('/api/forms', chalanRoutes);
 
 
 // connect to db
